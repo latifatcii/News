@@ -12,7 +12,9 @@ protocol HomeViewModelProtocol {
     var delegate: HomeViewModelDelegate? { get set }
     var service: APIClient { get }
     func loadNews(from page: Int)
-    func favNews()
+    func favNews(at index: Int)
+    func unfavNews(at index: Int)
+    func checkIsNewsFavorite(at index: Int, completion: @escaping((Bool) -> Void))
 }
 
 enum HomeViewState {

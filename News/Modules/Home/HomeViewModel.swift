@@ -10,10 +10,11 @@ import Foundation
 final class HomeViewModel: HomeViewModelProtocol {
     
     var service: APIClient
+    private var persistanceManager = PersistanceManager()
     var news = [Article]()
     weak var delegate: HomeViewModelDelegate?
 
-    init(_ service: APIClient = APIService()) {
+    init(_ service: APIClient = APIService() ) {
         self.service = service
     }
     
@@ -47,8 +48,26 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
     
-    func favNews() {
-        
+    func favNews(at index: Int) {
+        persistanceManager.save(data: news[index])
     }
     
+    func unfavNews(at index: Int) {
+        persistanceManager.removeData(with: news[index].title) { [weak self] (persistanceError) in
+            guard let self = self else { return }
+            print(persistanceError.rawValue)
+            self.delegate?.viewModel(.error(persistanceError.rawValue))
+        }
+    }
+    
+    func checkIsNewsFavorite(at index: Int, completion: @escaping((Bool) -> Void)) {
+        persistanceManager.checkData(with: news[index].title) { (response) in
+            switch response {
+            case .success(let isFav):
+                completion(isFav)
+            case .failure(let error):
+                print(error.rawValue)
+            }
+        }
+    }
 }

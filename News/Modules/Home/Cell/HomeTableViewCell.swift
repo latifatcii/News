@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol HomeTableViewCellDelegate: class {
+    func favButtonTapped(indexPath: IndexPath)
+}
+
 final class HomeTableViewCell: UITableViewCell {
     
+    weak var delegate: HomeTableViewCellDelegate?
     static let reuseIdentifier = "HomeTableViewCell"
-
+    var index: IndexPath!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var starButton: UIButton!
     
@@ -19,6 +25,14 @@ final class HomeTableViewCell: UITableViewCell {
         // Initialization code
     }
     @IBAction func starButtonTapped(_ sender: Any) {
+        delegate?.favButtonTapped(indexPath: index)
     }
-    
+ 
+    func switchFavButtonImage(isDataFavorited: Bool) {
+        if isDataFavorited {
+            starButton.setImage(UIImage(named: "star.fill"), for: .normal)
+        } else {
+            starButton.setImage(UIImage(named: "star"), for: .normal)
+        }
+    }
 }

@@ -36,6 +36,8 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseIdentifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
         cell.titleLabel.text = viewModel.news[indexPath.row].title
+        cell.index = indexPath
+        cell.delegate = self
         return cell
     }
 }
@@ -67,4 +69,25 @@ extension HomeViewController: HomeViewModelDelegate {
             }
         }
     }
+}
+
+extension HomeViewController: HomeTableViewCellDelegate {
+    func favButtonTapped(indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? HomeTableViewCell
+        
+        viewModel.checkIsNewsFavorite(at: indexPath.row) { [weak self] (isFav) in
+            guard let self = self else { return }
+            
+            if isFav {
+                self.viewModel.unfavNews(at: indexPath.row)
+            } else {
+                self.viewModel.favNews(at: indexPath.row)
+            }
+
+            cell?.switchFavButtonImage(isDataFavorited: isFav)
+            self.tableView.reloadRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    
 }
