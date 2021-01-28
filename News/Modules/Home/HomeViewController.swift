@@ -35,6 +35,11 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseIdentifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
+        
+        viewModel.checkIsNewsFavorite(at: indexPath.row) { (isFav) in
+            cell.switchFavButtonImage(isDataFavorited: isFav)
+        }
+        
         cell.titleLabel.text = viewModel.news[indexPath.row].title
         cell.index = indexPath
         cell.delegate = self

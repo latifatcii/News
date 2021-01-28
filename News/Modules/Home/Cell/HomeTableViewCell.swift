@@ -30,9 +30,9 @@ final class HomeTableViewCell: UITableViewCell {
  
     func switchFavButtonImage(isDataFavorited: Bool) {
         if isDataFavorited {
-            starButton.setImage(UIImage(named: "star.fill"), for: .normal)
+            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         } else {
-            starButton.setImage(UIImage(named: "star"), for: .normal)
+            starButton.setImage(UIImage(systemName: "star"), for: .normal)
         }
     }
 }
