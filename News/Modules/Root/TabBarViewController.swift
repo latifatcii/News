@@ -17,8 +17,11 @@ final class TabBarViewController: UITabBarController {
     private func setTabBarItems() {
         
         //Set HomeViewController as a first tab at TabBarController
-        let homeVC = HomeViewController()
+        let homeStoryboard = UIStoryboard(name: "Home", bundle: nil)
+        let homeVC = homeStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        homeVC.viewModel = HomeViewModel()
         homeVC.view.backgroundColor = .white
+        homeVC.title = "News"
         let homeNC = UINavigationController(rootViewController: homeVC)
         homeNC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         

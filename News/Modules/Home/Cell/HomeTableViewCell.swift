@@ -7,17 +7,18 @@
 
 import UIKit
 
-class HomeTableViewCell: UITableViewCell {
+final class HomeTableViewCell: UITableViewCell {
+    
+    static let reuseIdentifier = "HomeTableViewCell"
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var starButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBAction func starButtonTapped(_ sender: Any) {
     }
     
 }
