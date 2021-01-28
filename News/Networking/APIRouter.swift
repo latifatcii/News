@@ -15,7 +15,7 @@ extension APIRouter: APIMethod {
     var parameters: [String : Any] {
         switch self {
             case .topHeadline(let page):
-                return ["page": page, "apiKey": Key.apiKey.rawValue]
+                return ["page": page, "apiKey": Key.apiKey.rawValue, "category": "general", "language": "en"]
         }
     }
     
